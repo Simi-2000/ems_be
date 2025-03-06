@@ -1,13 +1,13 @@
-package net.javaguides.springboot;
+package com.sample.spbootdemo.spbootsample;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringbootApplication {
+public class SpbootdemoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringbootApplication.class, args);
+		SpringApplication.run(SpbootdemoApplication.class, args);
 	}
 
 }
