@@ -1,5 +1,6 @@
 package com.sample.spbootdemo.spbootsample.service;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,13 +11,22 @@ import com.sample.spbootdemo.spbootsample.model.StudentModel;
 import com.sample.spbootdemo.spbootsample.repository.StudentRepository;
 
 @Service
-public class StudentServiceImpl implements StudentService{
+public class StudentServiceImpl implements StudentService {
 	@Autowired
 	private StudentRepository repository;
 
 	@Override
 	public StudentModel insertNewStudent(StudentModel model) {
-		
+//	List<StudentModel> list= repository.findByStudentName(model.getStudentName());
+//	if(list.size()!=0) {
+//		return new StudentModel(null,null,null);
+//	}
+		List<StudentModel> slist = viewAllStudent();
+		for (StudentModel std : slist) {
+			if(std.getStudentName().equals(model.getStudentName())) {
+				return new StudentModel(null,null,null);	
+			}
+		}
 		return repository.save(model);
 	}
 
@@ -43,17 +53,5 @@ public class StudentServiceImpl implements StudentService{
 		}
 		return new StudentModel();
 	}
-
-	@Override
-	public StudentModel deleteStudent(Integer studentId) {
-		Optional<StudentModel> op = repository.findById(studentId);
-		if (!op.isEmpty()) {
-			repository.deleteById(studentId);
-			return op.get();
-		}
-		return new StudentModel();
-	}
-	
-
 
 }

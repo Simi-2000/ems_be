@@ -9,6 +9,6 @@ public interface StudentService {
 	   public StudentModel updateStudent(StudentModel model);
 	   public List<StudentModel> viewAllStudent();
 	   public StudentModel viewOneStudent(Integer studentId);
-	   public StudentModel deleteStudent(Integer studentId);
+	  
 
 }
