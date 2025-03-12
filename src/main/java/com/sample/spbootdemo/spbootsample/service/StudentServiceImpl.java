@@ -22,9 +22,12 @@ public class StudentServiceImpl implements StudentService {
 //		return new StudentModel(null,null,null);
 //	}
 		List<StudentModel> slist = viewAllStudent();
+		if (model.getStudentId() == null && (model.getStudentDob() == null || model.getStudentName() == null)) {
+			return new StudentModel(null, null, null);
+		}
 		for (StudentModel std : slist) {
-			if(std.getStudentName().equals(model.getStudentName())) {
-				return new StudentModel(null,null,null);	
+			if (std.getStudentName().equals(model.getStudentName())) {
+				return new StudentModel(null, null, null);
 			}
 		}
 		return repository.save(model);
@@ -32,6 +35,9 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public StudentModel updateStudent(StudentModel model) {
+		if (model.getStudentId() == null || model.getStudentDob() == null || model.getStudentName() == null) {
+			return new StudentModel(null, null, null);
+		}
 		Optional<StudentModel> op = repository.findById(model.getStudentId());
 		if (!op.isEmpty()) {
 			return repository.save(model);

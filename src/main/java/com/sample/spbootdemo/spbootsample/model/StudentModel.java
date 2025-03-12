@@ -10,11 +10,10 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "student_detail")
 public class StudentModel {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "student_id")
-    private Integer studentId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "student_id")
+	private Integer studentId;
 
     @Column(name = "student_name")
     private String studentName;
