@@ -1,6 +1,5 @@
 package com.sample.spbootdemo.spbootsample.service;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,52 +11,67 @@ import com.sample.spbootdemo.spbootsample.repository.StudentRepository;
 
 @Service
 public class StudentServiceImpl implements StudentService {
-	@Autowired
-	private StudentRepository repository;
+    @Autowired
+    private StudentRepository repository;
 
-	@Override
-	public StudentModel insertNewStudent(StudentModel model) {
-//	List<StudentModel> list= repository.findByStudentName(model.getStudentName());
-//	if(list.size()!=0) {
-//		return new StudentModel(null,null,null);
-//	}
-		List<StudentModel> slist = viewAllStudent();
-		if (model.getStudentId() == null && (model.getStudentDob() == null || model.getStudentName() == null)) {
-			return new StudentModel(null, null, null);
-		}
-		for (StudentModel std : slist) {
-			if (std.getStudentName().equals(model.getStudentName())) {
-				return new StudentModel(null, null, null);
-			}
-		}
-		return repository.save(model);
-	}
+    @Override
+    public StudentModel insertNewStudent(StudentModel model) {
+        // Check if any of the required fields are missing
+        if (model.getStudentDob() == null || model.getStudentName() == null || model.getRollNumber() == null) {
+            return new StudentModel(null, null, null, null, null, null); // Return empty object if missing fields
+        }
 
-	@Override
-	public StudentModel updateStudent(StudentModel model) {
-		if (model.getStudentId() == null || model.getStudentDob() == null || model.getStudentName() == null) {
-			return new StudentModel(null, null, null);
-		}
-		Optional<StudentModel> op = repository.findById(model.getStudentId());
-		if (!op.isEmpty()) {
-			return repository.save(model);
-		}
-		return new StudentModel();
-	}
+        // Check for duplicate student (by name or roll number)
+        List<StudentModel> existingStudents = viewAllStudent();
+        boolean isDuplicate = existingStudents.stream().anyMatch(std ->
+            std.getStudentName().equals(model.getStudentName()) || std.getRollNumber().equals(model.getRollNumber())
+        );
 
-	@Override
-	public List<StudentModel> viewAllStudent() {
-		return repository.findAll();
-	}
+        if (isDuplicate) {
+            return new StudentModel(null, null, null, null, null, null); // Return empty object if duplicate found
+        }
 
-	@Override
-	public StudentModel viewOneStudent(Integer studentId) {
+        // Save the new student
+        return repository.save(model);
+    }
 
-		Optional<StudentModel> op = repository.findById(studentId);
-		if (!op.isEmpty()) {
-			return op.get();
-		}
-		return new StudentModel();
-	}
+    @Override
+    public StudentModel updateStudent(StudentModel model) {
+        // Ensure all required fields are present before updating
+        if (model.getStudentId() == null || model.getStudentDob() == null || model.getStudentName() == null || model.getRollNumber() == null) {
+            return new StudentModel(null, null, null, null, null, null); // Return empty object if missing fields
+        }
 
+        // Find student by ID and update
+        Optional<StudentModel> existingStudent = repository.findById(model.getStudentId());
+        if (existingStudent.isPresent()) {
+            return repository.save(model); // Update and save the student if exists
+        }
+
+        return new StudentModel(); // Return empty StudentModel if student not found
+    }
+
+    @Override
+    public List<StudentModel> viewAllStudent() {
+        return repository.findAll(); // Return all students from the database
+    }
+
+    @Override
+    public StudentModel viewOneStudent(Integer studentId) {
+        // Find student by ID and return if found
+        Optional<StudentModel> op = repository.findById(studentId);
+        return op.orElse(new StudentModel()); // Return the student or an empty StudentModel if not found
+    }
+
+    // Add deleteStudent method to delete a student by ID
+    @Override
+    public boolean deleteStudent(Integer studentId) {
+        Optional<StudentModel> student = repository.findById(studentId); // Check if the student exists
+        if (student.isPresent()) {
+            repository.deleteById(studentId);  // Delete the student if found
+            return true;  // Return true if deletion was successful
+        } else {
+            return false;  // Return false if student not found
+        }
+    }
 }

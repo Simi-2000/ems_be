@@ -10,10 +10,11 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "student_detail")
 public class StudentModel {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "student_id")
-	private Integer studentId;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "student_id")
+    private Integer studentId;
 
     @Column(name = "student_name")
     private String studentName;
@@ -21,7 +22,15 @@ public class StudentModel {
     @Column(name = "student_dob")
     private String studentDob;
 
-    
+    @Column(name = "place")
+    private String place;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "roll_number")
+    private String rollNumber;
+
     // Getters and Setters
     public Integer getStudentId() {
         return studentId;
@@ -47,24 +56,47 @@ public class StudentModel {
         this.studentDob = studentDob;
     }
 
-    
-
-    // toString() method
-    @Override
-    public String toString() {
-        return "StudentModel [studentId=" + studentId + ", studentName=" + studentName +
-                ", studentDob=" + studentDob + "]";
+    public String getPlace() {
+        return place;
     }
 
-    // Parameterized Constructor
-    public StudentModel(Integer studentId, String studentName, String studentDob) {
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getRollNumber() {
+        return rollNumber;
+    }
+
+    public void setRollNumber(String rollNumber) {
+        this.rollNumber = rollNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "StudentModel [studentId=" + studentId + ", studentName=" + studentName + ", studentDob=" + studentDob
+                + ", place=" + place + ", address=" + address + ", rollNumber=" + rollNumber + "]";
+    }
+
+    public StudentModel(Integer studentId, String studentName, String studentDob, String place, String address,
+            String rollNumber) {
         this.studentId = studentId;
         this.studentName = studentName;
         this.studentDob = studentDob;
-       
+        this.place = place;
+        this.address = address;
+        this.rollNumber = rollNumber;
     }
 
-    // Default Constructor
     public StudentModel() {
     }
 }
+

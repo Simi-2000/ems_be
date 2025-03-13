@@ -1,14 +1,14 @@
 package com.sample.spbootdemo.spbootsample.service;
 
 import java.util.List;
-
 import com.sample.spbootdemo.spbootsample.model.StudentModel;
 
 public interface StudentService {
-	 public StudentModel insertNewStudent(StudentModel model);
-	   public StudentModel updateStudent(StudentModel model);
-	   public List<StudentModel> viewAllStudent();
-	   public StudentModel viewOneStudent(Integer studentId);
-	  
+    StudentModel insertNewStudent(StudentModel model);
+    StudentModel updateStudent(StudentModel model);
+    List<StudentModel> viewAllStudent();
+    StudentModel viewOneStudent(Integer studentId);
 
+    // Add delete method in the interface
+    boolean deleteStudent(Integer studentId);  // Return boolean to indicate success/failure
 }
