@@ -16,38 +16,21 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentModel insertNewStudent(StudentModel model) {
-        // Check if any of the required fields are missing
-        if (model.getStudentDob() == null || model.getStudentName() == null || model.getRollNumber() == null) {
-            return new StudentModel(null, null, null, null, null, null); // Return empty object if missing fields
-        }
-
-        // Check for duplicate student (by name or roll number)
-        List<StudentModel> existingStudents = viewAllStudent();
-        boolean isDuplicate = existingStudents.stream().anyMatch(std ->
-            std.getStudentName().equals(model.getStudentName()) || std.getRollNumber().equals(model.getRollNumber())
-        );
-
-        if (isDuplicate) {
-            return new StudentModel(null, null, null, null, null, null); // Return empty object if duplicate found
-        }
-
-        // Save the new student
+      if(model==null||model.getStudentName()==null||model.getStudentDob()==null) {
+    	  return new StudentModel();
+      }
         return repository.save(model);
     }
 
     @Override
     public StudentModel updateStudent(StudentModel model) {
-        // Ensure all required fields are present before updating
-        if (model.getStudentId() == null || model.getStudentDob() == null || model.getStudentName() == null || model.getRollNumber() == null) {
-            return new StudentModel(null, null, null, null, null, null); // Return empty object if missing fields
-        }
-
-        // Find student by ID and update
-        Optional<StudentModel> existingStudent = repository.findById(model.getStudentId());
+    	 if(model==null||model.getStudentName()==null||model.getStudentDob()==null||model.getStudentRollNo()==null) {
+       	  return new StudentModel();
+         }
+        Optional<StudentModel> existingStudent = repository.findById(model.getStudentRollNo());
         if (existingStudent.isPresent()) {
             return repository.save(model); // Update and save the student if exists
         }
-
         return new StudentModel(); // Return empty StudentModel if student not found
     }
 
@@ -58,7 +41,6 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentModel viewOneStudent(Integer studentId) {
-        // Find student by ID and return if found
         Optional<StudentModel> op = repository.findById(studentId);
         return op.orElse(new StudentModel()); // Return the student or an empty StudentModel if not found
     }
@@ -66,6 +48,10 @@ public class StudentServiceImpl implements StudentService {
     // Add deleteStudent method to delete a student by ID
     @Override
     public boolean deleteStudent(Integer studentId) {
+        if (studentId == null) {
+            return false; // If studentId is null, we don't proceed with deletion
+        }
+
         Optional<StudentModel> student = repository.findById(studentId); // Check if the student exists
         if (student.isPresent()) {
             repository.deleteById(studentId);  // Delete the student if found

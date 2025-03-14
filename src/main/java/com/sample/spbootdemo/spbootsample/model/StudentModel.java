@@ -11,92 +11,80 @@ import jakarta.persistence.Table;
 @Table(name = "student_detail")
 public class StudentModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "student_id")
-    private Integer studentId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // This ensures auto-generation of student_id
+	@Column(name = "student_roll_no")
+	private Integer studentRollNo;
 
-    @Column(name = "student_name")
-    private String studentName;
+	@Column(name = "student_name")
+	private String studentName;
 
-    @Column(name = "student_dob")
-    private String studentDob;
+	@Column(name = "student_dob")
+	private String studentDob;
 
-    @Column(name = "place")
-    private String place;
+	@Column(name = "student_place")
+	private String studentPlace;
 
-    @Column(name = "address")
-    private String address;
+	@Column(name = "student_address")
+	private String studentAddress;
 
-    @Column(name = "roll_number")
-    private String rollNumber;
+	public Integer getStudentRollNo() {
+		return studentRollNo;
+	}
 
-    // Getters and Setters
-    public Integer getStudentId() {
-        return studentId;
-    }
+	public void setStudentRollNo(Integer studentRollNo) {
+		this.studentRollNo = studentRollNo;
+	}
 
-    public void setStudentId(Integer studentId) {
-        this.studentId = studentId;
-    }
+	public String getStudentName() {
+		return studentName;
+	}
 
-    public String getStudentName() {
-        return studentName;
-    }
+	public void setStudentName(String studentName) {
+		this.studentName = studentName;
+	}
 
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
-    }
+	public String getStudentDob() {
+		return studentDob;
+	}
 
-    public String getStudentDob() {
-        return studentDob;
-    }
+	public void setStudentDob(String studentDob) {
+		this.studentDob = studentDob;
+	}
 
-    public void setStudentDob(String studentDob) {
-        this.studentDob = studentDob;
-    }
+	public String getStudentPlace() {
+		return studentPlace;
+	}
 
-    public String getPlace() {
-        return place;
-    }
+	public void setStudentPlace(String studentPlace) {
+		this.studentPlace = studentPlace;
+	}
 
-    public void setPlace(String place) {
-        this.place = place;
-    }
+	public String getStudentAddress() {
+		return studentAddress;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public void setStudentAddress(String studentAddress) {
+		this.studentAddress = studentAddress;
+	}
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+	@Override
+	public String toString() {
+		return "StudentModel [studentRollNo=" + studentRollNo + ", studentName=" + studentName + ", studentDob="
+				+ studentDob + ", studentPlace=" + studentPlace + ", studentAddress=" + studentAddress + "]";
+	}
 
-    public String getRollNumber() {
-        return rollNumber;
-    }
+	public StudentModel(Integer studentRollNo, String studentName, String studentDob, String studentPlace,
+			String studentAddress) {
+		super();
+		this.studentRollNo = studentRollNo;
+		this.studentName = studentName;
+		this.studentDob = studentDob;
+		this.studentPlace = studentPlace;
+		this.studentAddress = studentAddress;
+	}
 
-    public void setRollNumber(String rollNumber) {
-        this.rollNumber = rollNumber;
-    }
-
-    @Override
-    public String toString() {
-        return "StudentModel [studentId=" + studentId + ", studentName=" + studentName + ", studentDob=" + studentDob
-                + ", place=" + place + ", address=" + address + ", rollNumber=" + rollNumber + "]";
-    }
-
-    public StudentModel(Integer studentId, String studentName, String studentDob, String place, String address,
-            String rollNumber) {
-        this.studentId = studentId;
-        this.studentName = studentName;
-        this.studentDob = studentDob;
-        this.place = place;
-        this.address = address;
-        this.rollNumber = rollNumber;
-    }
-
-    public StudentModel() {
-    }
+	public StudentModel() {
+		// TODO Auto-generated constructor stub
+	}
 }
-
